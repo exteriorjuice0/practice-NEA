@@ -8,11 +8,19 @@ app.secret_key = "tomEggletonIsAChud"
 
 @app.route("/")
 def home():
-    return render_template("signup.html")
+    if request.method =="GET":
+     return render_template("login.html")
+    
+    return "Logging in..."
 
 
-@app.route("/signup", methods = ["POST"])
+@app.route("/signup", methods = ["POST","GET"])
 def signup():
+
+    if request.method == "GET":
+
+        return render_template("signup.html")
+
     formdata = request.form
     username = formdata.get("username")
     password = formdata.get("password")
@@ -38,7 +46,7 @@ def signup():
         flash("Passwords do not match")
 
     if not success:
-        return redirect("/")
+        return redirect("/signup")
 
     return "signing up..."
 app.run(debug=True)
