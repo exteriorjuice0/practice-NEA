@@ -31,9 +31,21 @@ class DatabaseHandler:
         finally:
             conn.close()
 
-
     def readUser(self):
         pass
+
+    def readUserPasswordHash(self,username):
+        try:
+            conn = sql.connect(self.databaseName)
+            cursor = conn.cursor()
+            cursor.execute("SELECT password FROM users WHERE username = ?", (username, ))
+            results = cursor.fetchone()
+
+            return True, results
+        except:
+            return False, "an error occured"
+        finally:
+            conn.close()
 
     def updateUser(self):
         pass
